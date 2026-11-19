@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>St. Josephs High School | Lighted for Life</title>
+<meta name="description" content="St. Josephs High School: Lighted for Life. Admissions, academics, notices and campus life.">
+<link rel="icon" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<header><div class="w bar"><a class="brand" href="#home"><img class="logo" src="images/logo.png" alt="St. Josephs High School logo"><span><b>St. Josephs High School</b><small>Lighted for Life</small></span></a>
+<button class="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav id="nav"><a href="#home">Home</a><a href="#notices">Notices</a><a href="#academics">Academics</a><a href="#facilities">Facilities</a><a href="#teachers">Teachers</a><a href="#gallery">Gallery</a><a href="#admission">Admission</a><a href="#contact">Contact</a></nav></div></header>
+<main id="app"></main>
+<footer><div class="w fg"><div><h3>St. Josephs High School</h3><p>Lighted for Life</p></div>
+<div><h3>Explore</h3><a href="#notices">Notices</a><a href="#admission">Admission</a><a href="#contact">Contact</a></div>
+<div><h3>Contact</h3><p>Address, phone, email and opening hours will appear here once the school adds them.</p></div></div>
+<div class="w fb"><span>© 2026 St. Josephs High School</span><a href="#" id="adm">Admin Login</a></div></footer>
+<button id="top" aria-label="Back to top">Top</button>
+<dialog id="dlg"><h3>Admin login</h3><p>The admin dashboard needs the Firebase version of the site, because a hosted preview can’t run secure sign-in or save data. Deploy the project from the zip to use it.</p><form method="dialog"><button class="btn">Close</button></form></dialog>
+<script>
+// PREVIEW DATA: placeholders only. Nothing here is real school information.
+const D={
+ notices:[{t:'Sample notice: add your first notice',d:'2026-11-10',i:true,x:'In the live site, notices come from the admin dashboard, with optional PDF downloads.'},{t:'Sample notice: examination timetable',d:'2026-11-02',i:false,x:'Replace this with your real announcement.'},{t:'Sample notice: parent meeting',d:'2026-10-20',i:false,x:'Replace this with your real announcement.'}],
+ subjects:['English','Mathematics','Science','Social Studies','Computer Science','Second Language'],
+ fac:['Classrooms','Library','Science laboratory','Computer facilities','Sports and playground','Drinking water','Sanitation'],
+ cats:['School Campus','Cultural Programmes','Sports Events','Annual Functions','Celebrations','Classroom Activities','Other Events']
+};
+const $=(s,r=document)=>r.querySelector(s),app=$('#app');
+const fmt=d=>new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const head=(t,p)=>`<section class="ph"><div class="w"><h1>${t}</h1><p>${p}</p></div></section>`;
+const note='<p class="note">Preview with sample content. The live site loads real content from the school’s database.</p>';
+const nc=n=>`<article class="card${n.i?' imp':''}"><time>${fmt(n.d)}</time>${n.i?' <b>Important</b>':''}<h3>${n.t}</h3><p>${n.x}</p></article>`;
+const P={
+home:()=>`<section class="hero"><div class="w"><p class="m">Lighted for Life</p><h1>St. Josephs High School</h1><p class="l">Welcome to our school community. A place where students learn, grow and are encouraged to shine.</p><a class="btn" href="#admission">Apply now</a> <a class="btn g" href="#notices">Read notices</a></div></section>
+<section class="stats"><div class="w sg"><div><strong>300+</strong>Students</div><div><strong>20+</strong>Teaching staff</div><div><strong>1986</strong>Established</div></div></section>
+<section class="s"><div class="w two"><div><h2>About our school</h2><p>St. Josephs High School, Baganpara, has been serving students since 1986. The rest of the school’s introduction will appear here, and the administrator can edit it from the dashboard.</p><a href="#academics">Explore academics</a></div><div class="img">School photo</div></div></section>
+<section class="s t"><div class="w two"><div class="img">Principal’s photo</div><div><h2>From the principal’s desk</h2><p>The principal’s welcome message will appear here.</p></div></div></section>
+<section class="s"><div class="w"><h2>Latest notices</h2><div class="grid">${D.notices.map(nc).join('')}</div><p><a href="#notices">All notices</a></p></div></section>
+<section class="s t"><div class="w"><h2>Academic highlights</h2><div class="chips">${D.subjects.map(s=>`<span>${s}</span>`).join('')}</div></div></section>
+<section class="s"><div class="w"><h2>Our facilities</h2><div class="grid">${D.fac.slice(0,3).map(f=>`<div class="card"><div class="img">Photo</div><h3>${f}</h3></div>`).join('')}</div></div></section>
+<section class="cta"><div class="w"><h2>Admissions are open</h2><p>Send an enquiry and our office will contact you.</p><a class="btn" href="#admission">Apply now</a></div></section>`,
+notices:()=>head('Notice board','Announcements from the school office.')+`<div class="w s">${note}<div class="fl"><input id="nq" type="search" placeholder="Search notices" aria-label="Search notices"><label><input id="ni" type="checkbox"> Important only</label></div><div id="nl" class="grid"></div></div>`,
+academics:()=>head('Academics','How we teach and assess.')+`<div class="w s">${note}${[['Academic overview','Your overview appears here.'],['Curriculum','Your curriculum details appear here.'],['Examinations','Examination information appears here.'],['Academic calendar','Your calendar appears here.'],['Rules and policies','School rules and academic policies appear here.']].map(([a,b])=>`<div class="card" style="margin-bottom:.8rem"><h3>${a}</h3><p>${b}</p></div>`).join('')}<h2>Classes and subjects</h2><div class="chips">${D.subjects.map(s=>`<span>${s}</span>`).join('')}</div></div>`,
+facilities:()=>head('Facilities','Spaces that support learning and play.')+`<div class="w s">${note}<div class="grid">${D.fac.map(f=>`<div class="card"><div class="img">Photo of ${f.toLowerCase()}</div><h3>${f}</h3><p>Description added by the administrator.</p></div>`).join('')}</div></div>`,
+teachers:()=>head('Our teachers','The people behind every classroom.')+`<div class="w s">${note}<div class="grid">${Array.from({length:8},(_,i)=>`<div class="card"><div class="img">Photograph</div><h3>Teacher name ${i+1}</h3><p><b>Designation</b><br>Subject</p><p class="sm">Qualification and short biography.</p></div>`).join('')}</div></div>`,
+gallery:()=>head('Gallery','Life at our school.')+`<div class="w s">${note}<div class="fl" id="gf"><button class="on" data-c="">All</button>${D.cats.map(c=>`<button data-c="${c}">${c}</button>`).join('')}</div><div class="grid" id="gg"></div></div>`,
+admission:()=>head('Admission','Join the St. Josephs family.')+`<div class="w s two">${'<div>'+note+'<div class="card"><h3>Admission information</h3><p>Eligibility, required documents, procedure and important dates appear here.</p></div></div>'}
+<form class="f card" id="af" novalidate><h2>Admission enquiry</h2><label>Student’s name<input required></label><label>Date of birth<input type="date" required></label><label>Gender<select required><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option></select></label><label>Parent / guardian name<input required></label><label>Contact number<input type="tel" required pattern="[0-9+ \\-]{7,15}"></label><label>Email<input type="email" required></label><label>Applying for class<input required></label><label>Previous school<input></label><label>Address<textarea rows="3" required></textarea></label><button class="btn">Submit enquiry</button><p class="ok" hidden>Preview only: this form passed validation but was not saved.</p></form></div>`,
+contact:()=>head('Contact us','We are happy to hear from you.')+`<div class="w s two"><div>${note}<div class="card"><h3>Visit or call</h3><p>Address, phone and email appear here.</p><h3>Opening hours</h3><p>Hours appear here.</p></div><div class="img" style="margin-top:1rem">Google Maps location</div></div>
+<form class="f card" id="cf" novalidate><h2>Send a message</h2><label>Name<input required></label><label>Email<input type="email" required></label><label>Subject<input required></label><label>Message<textarea rows="5" required></textarea></label><button class="btn">Send message</button><p class="ok" hidden>Preview only: this form passed validation but was not saved.</p></form></div>`
+};
+function route(){const k=(location.hash||'#home').slice(1);const f=P[k]||P.home;app.innerHTML=f();scrollTo(0,0);
+ document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+(P[k]?k:'home')));$('#nav').classList.remove('open');
+ if(k==='notices'){const d=()=>{const q=$('#nq').value.toLowerCase(),i=$('#ni').checked;$('#nl').innerHTML=D.notices.filter(n=>(!i||n.i)&&(n.t+n.x).toLowerCase().includes(q)).map(nc).join('')||'<p>No notices match your search.</p>'};$('#nq').oninput=d;$('#ni').onchange=d;d()}
+ if(k==='gallery'){const d=c=>{$('#gg').innerHTML=(c?[c]:D.cats).map(x=>`<div class="img">${x}<br>photo</div>`).join('')};d('');$('#gf').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('#gf').children].forEach(x=>x.classList.toggle('on',x===b));d(b.dataset.c)}}
+ ['af','cf'].forEach(id=>{const f=$('#'+id);if(f)f.onsubmit=e=>{e.preventDefault();if(!f.checkValidity()){f.reportValidity();return}$('.ok',f).hidden=false}})}
+addEventListener('hashchange',route);route();
+$('.menu').onclick=e=>{const o=$('#nav').classList.toggle('open');e.target.setAttribute('aria-expanded',o)};
+$('#adm').onclick=e=>{e.preventDefault();$('#dlg').showModal()};
+addEventListener('scroll',()=>$('#top').classList.toggle('on',scrollY>600),{passive:true});$('#top').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+</script></body></html>
